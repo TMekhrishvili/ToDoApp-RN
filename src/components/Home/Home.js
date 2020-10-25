@@ -3,26 +3,33 @@ import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 
 import Note from '../Note/Note';
 
 const Home = () => {
-    const [note, setNote] = useState(["პირველი", "მეორე"]);
+    // hooks
+    const [note, setNote] = useState("");
+    const [allNotes, setAllNotes] = useState([]);
+    // methods
     const addNote = () => {
-        setNote(note.concat("მესამე")); // TextInput's value
+        setAllNotes(allNotes.concat(note));
+        setNote("");
     }
     const removeNote = () => {
-        // setNote(note); remove item in array
+        // setAllNotes(note); remove item in array
     }
+    // render
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerText}>Notes</Text>
             </View>
             <ScrollView style={styles.scrollContainer}>
-                {note.map((value, index) => <Note key={index} note={value} remove={() => { removeNote() }} />)}
+                {allNotes.map((value, index) => <Note key={index} note={value} remove={() => { removeNote() }} />)}
             </ScrollView>
             <View style={styles.footer}>
                 <TextInput
                     style={styles.textInput}
                     placeholder='add note...'
                     placeholderTextColor='rgba(255,255,255,0.7)'
+                    onChangeText={text => setNote(text)}
+                    value={note}
                 >
                 </TextInput>
             </View>
